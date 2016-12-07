@@ -2,7 +2,7 @@ package activity;
 
 import android.app.ProgressDialog;
 
-import android.media.Image;
+import model.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
                             {
                                 JSONObject object = results.getJSONObject(i);
                                 String path = object.getJSONObject("poster_path").toString();
-                                setImageProperties(path);
+                                String movie_title = object.getJSONObject("original_title").toString();
+                                setImageProperties(path,movie_title);
                             }
                         }
                         catch(JSONException e)
@@ -92,10 +93,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    private void setImageProperties(String path)
+    private void setImageProperties(String path,String movie_title)
     {
         poster_path+=path;
-        //Include model package and Image class file.
+        Image image = new Image();
+        image.setMovie_title(movie_title);
+        image.setUrl(poster_path);
+        images.add(image);
+
 
     }
 }
